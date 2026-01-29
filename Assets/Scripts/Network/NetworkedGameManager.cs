@@ -61,8 +61,8 @@ public class NetworkedGameManager : NetworkBehaviour
 
         foreach (var playerSpawn in _networkSessionManager._joinedPlayers)
         {
-            var networkObecjt = Object.Runner.Spawn(playerPrefab, Vector3.zero, Quaternion.identity, playerSpawn);
-            _spawnedCharacters.Add(playerSpawn, networkObecjt);
+            var networkObject = Object.Runner.Spawn(playerPrefab, Vector3.zero, Quaternion.identity, playerSpawn);
+            _spawnedCharacters.Add(playerSpawn, networkObject);
         }
     }
 }
