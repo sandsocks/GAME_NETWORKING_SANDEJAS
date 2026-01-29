@@ -5,7 +5,7 @@ using Fusion.Sockets;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
+public class NetworkSessionManager : MonoBehaviour, INetworkRunnerCallbacks
 {
     #region Public Variables
     [SerializeField] private NetworkPrefabRef playerPrefab;
@@ -14,6 +14,12 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
     #region Private Variables
     private Dictionary<PlayerRef, NetworkObject> _spawnedCharacters = new();
     private NetworkRunner _networkRunner;
+
+    private List<PlayerRef> _joinedCharacters = new();
+    public IReadOnlyList<PlayerRef> _joinedPlayers;
+
+    public event Action<PlayerRef> OnPlayerJoinedEvent;
+    public event Action<PlayerRef> OnPlayerLeftEvent;
     #endregion
 
     public async void StartGame(GameMode game)
@@ -67,10 +73,15 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
 
     public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
     {
-        if (!_spawnedCharacters.TryGetValue(player, out var playerObject)) return;
+       if (!_spawnedCharacters.TryGetValue(player, out var playerObject)) return;
         
         runner.Despawn(playerObject);
         _spawnedCharacters.Remove(player);
+
+        /*
+         runner.Despawn(playerObject*;
+        _spawnedCharacters.Remove(player);
+        */
     }
     
     #endregion
