@@ -1,19 +1,22 @@
 using UnityEngine;
 using Fusion;
 using System.Collections.Generic;
+using TMPro;
 
 public class NetworkedGameManager : NetworkBehaviour
 {
     #region Public Variables
     [SerializeField] private NetworkPrefabRef playerPrefab;
+    [SerializeField] private TextMeshProUGUI _playerCountText;
+    [SerializeField] private TextMeshProUGUI _timerCountText;
     #endregion
 
     private Dictionary<PlayerRef, NetworkObject> _spawnedCharacters = new();
 
     private NetworkSessionManager _networkSessionManager;
 
-    private int maxPlayers = 2;
-    private int timerBeforeStart = 3;
+    private const int maxPlayers = 2;
+    private const int timerBeforeStart = 3;
 
     private void Awake()
     {
